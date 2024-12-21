@@ -14,6 +14,7 @@ public class Formulario2 extends JFrame implements ActionListener {
     private JScrollPane scrollPane;
     private MenuFrame regreso;
 
+
     public Formulario2(MenuFrame regreso) {
         this.regreso = regreso;
         setUndecorated(true);//eliminar botones de minimizar,maximizar,salir
@@ -96,7 +97,7 @@ public class Formulario2 extends JFrame implements ActionListener {
         }
 
         if (e.getSource() == boton2) {//regresar
-            dispose();
+            this.setVisible(false);
             regreso.setVisible(true);
         }
 

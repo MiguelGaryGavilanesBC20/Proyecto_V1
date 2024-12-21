@@ -20,6 +20,7 @@ class MenuFrame extends JFrame implements ActionListener{
     private JMenu archivo;
     private JMenu editar;
     private JMenu logo;
+    private Formulario2 ventanacrear;
 
     public MenuFrame() {
         setLayout(null);
@@ -103,14 +104,14 @@ class MenuFrame extends JFrame implements ActionListener{
 
     public void actionPerformed(ActionEvent e){
 // Container C=this.getContentPane();
-        
-        if(e.getSource()==crear){
-            Formulario2 ventanacrear = new Formulario2(this);
-            ventanacrear.setBounds(0,0,500,400);
-            ventanacrear.setVisible(true);
-            ventanacrear.setResizable(false);
-            ventanacrear.setLocationRelativeTo(null);
+        Formulario2 ventanacrear = new Formulario2(this);
+        ventanacrear.setBounds(0, 0, 500, 400);
+        ventanacrear.setResizable(false);
+        ventanacrear.setLocationRelativeTo(null);
+        ventanacrear.setVisible(false);
 
+        if(e.getSource()==crear){
+            ventanacrear.setVisible(true);
         }
         if(e.getSource()==salir){
             System.exit(0);
