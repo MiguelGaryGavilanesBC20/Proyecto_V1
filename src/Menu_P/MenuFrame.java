@@ -105,7 +105,7 @@ class MenuFrame extends JFrame implements ActionListener{
 // Container C=this.getContentPane();
         
         if(e.getSource()==crear){
-            Formulario2 ventanacrear = new Formulario2();
+            Formulario2 ventanacrear = new Formulario2(this);
             ventanacrear.setBounds(0,0,500,400);
             ventanacrear.setVisible(true);
             ventanacrear.setResizable(false);
