@@ -3,21 +3,24 @@ package Menu_P;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.*;
+import javax.swing.table.DefaultTableModel;
 
-public class Formulario2 extends JFrame implements ActionListener {
+public class Formulario2 extends JPanel implements ActionListener {
 
-    private JButton boton1, boton2;
+    private JButton boton1;
     private JLabel label1, label2, label3;
     private JTextField texto1, texto2, texto3;
-    private JTable tabla;
     private DefaultTableModel modeloTabla;
+    private JTable tabla;
     private JScrollPane scrollPane;
-    private MenuFrame regreso;
 
 
-    public Formulario2(MenuFrame regreso) {
-        this.regreso = regreso;
-        setUndecorated(true);//eliminar botones de minimizar,maximizar,salir
+
+    public Formulario2(DefaultTableModel modeloTabla ) {
+
+
+
+        //setUndecorated(true);//eliminar botones de minimizar,maximizar,salir
         setLayout(null);
 
 
@@ -51,16 +54,10 @@ public class Formulario2 extends JFrame implements ActionListener {
         add(texto3);
 
 
-        boton1 = new JButton("Guardar");
+        boton1 = new JButton("Registrar");
         boton1.setBounds(300, 20, 100, 30);
         add(boton1);
         boton1.addActionListener(this);
-
-
-        boton2 = new JButton("Regresar");
-        boton2.setBounds(300, 60, 100, 30);
-        add(boton2);
-        boton2.addActionListener(this);
 
 
         modeloTabla = new DefaultTableModel();
@@ -68,27 +65,25 @@ public class Formulario2 extends JFrame implements ActionListener {
         modeloTabla.addColumn("Apellido");
         modeloTabla.addColumn("Equipo");
 
-
+        this.modeloTabla = modeloTabla;
         tabla = new JTable(modeloTabla);
         scrollPane = new JScrollPane(tabla);
-        scrollPane.setBounds(50, 120, 400, 240);
+        scrollPane.setBounds(40, 130, 420, 200);
         add(scrollPane);
     }
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == boton1) { //guardar
 
-            String nombre = texto1.getText();
-            String apellido = texto2.getText();
-            String equipo = texto3.getText();
+            String nombre = primeraletra(texto1.getText());
+            String apellido = primeraletra(texto2.getText());
+            String equipo = primeraletra(texto3.getText());
 
 
             if (nombre.isEmpty() || apellido.isEmpty() || equipo.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error al agregar los datos", JOptionPane.ERROR_MESSAGE);
             } else {
-
-                modeloTabla.addRow(new Object[]{nombre, apellido, equipo});
-
+                modeloTabla.addRow(new Object[]{nombre, apellido,equipo});
                 //limpiar campos de texto
                 texto1.setText("");
                 texto2.setText("");
@@ -96,11 +91,15 @@ public class Formulario2 extends JFrame implements ActionListener {
             }
         }
 
-        if (e.getSource() == boton2) {//regresar
-            this.setVisible(false);
-            regreso.setVisible(true);
+    }
+    public DefaultTableModel getModeloTabla() {
+        return modeloTabla;
+    }
+    private String primeraletra(String palabra) {
+        if (palabra == null || palabra.isEmpty()) {
+            return palabra;
         }
-
+        return palabra.substring(0, 1).toUpperCase() + palabra.substring(1).toLowerCase();
     }
 }
 

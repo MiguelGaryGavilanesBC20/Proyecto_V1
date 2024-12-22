@@ -2,7 +2,7 @@ package Menu_P;
 
 //import java.awt.Container;
 import java.awt.event.*;
-
+import javax.swing.table.DefaultTableModel;
 import javax.swing.*;
 //import javax.swing.JMenu;
 //import javax.swing.JMenuBar;
@@ -15,20 +15,25 @@ import javax.swing.*;
 class MenuFrame extends JFrame implements ActionListener{
     private JMenuItem info_p,participantes;
     private JMenuBar mibarra;
-    private JMenuItem crear,salir,guardar,guardarcomo;
+    private JMenuItem crear,salir,guardar,guardarcomo,consult_op1;
     private JMenu acerca;
     private JMenu archivo;
     private JMenu editar;
     private JMenu logo;
-    private Formulario2 ventanacrear;
+    private JLabel titulo1;
+
+    private Formulario2 formularioPanel;
 
     public MenuFrame() {
         setLayout(null);
         setBounds(0, 0, 550, 400);
 
+        DefaultTableModel modeloTabla = new DefaultTableModel();
 // MenuLamina milamina = new MenuLamina();
 
 // add(milamina);
+
+
         mibarra = new JMenuBar();
 
         archivo = new JMenu("Archivo");
@@ -55,7 +60,8 @@ class MenuFrame extends JFrame implements ActionListener{
         participantes.addActionListener(this);
 
         JMenu consulta = new JMenu("Consulta");
-        JMenuItem consult_op1 = new JMenuItem("Jugadores");
+        consult_op1 = new JMenuItem("Jugadores");
+        consult_op1.addActionListener(this);
         JMenuItem consult_op2 = new JMenuItem("Equipos");
         JMenuItem consult_op3 = new JMenuItem("Arbitros");
         JMenuItem consult_op4 = new JMenuItem("Dirigentes");
@@ -100,18 +106,20 @@ class MenuFrame extends JFrame implements ActionListener{
 //Indicamos que es el menu por defecto
         setJMenuBar(mibarra);
 
+
+        formularioPanel = new Formulario2(modeloTabla);
+        add(formularioPanel);
     }
 
     public void actionPerformed(ActionEvent e){
 // Container C=this.getContentPane();
-        Formulario2 ventanacrear = new Formulario2(this);
-        ventanacrear.setBounds(0, 0, 500, 400);
-        ventanacrear.setResizable(false);
-        ventanacrear.setLocationRelativeTo(null);
-        ventanacrear.setVisible(false);
 
         if(e.getSource()==crear){
-            ventanacrear.setVisible(true);
+            getContentPane().removeAll(); // Remover componentes anteriores
+            formularioPanel.setBounds(0, 0, 550, 400);
+            add(formularioPanel);
+            revalidate();
+            repaint();
         }
         if(e.getSource()==salir){
             System.exit(0);
@@ -131,9 +139,21 @@ class MenuFrame extends JFrame implements ActionListener{
                 " Autores",
                 JOptionPane.INFORMATION_MESSAGE);
         }
+        if (e.getSource() == consult_op1) {
+
+            getContentPane().removeAll();  // Limpiar la ventana
+            JTable tabla = new JTable(formularioPanel.getModeloTabla());
+            JScrollPane scrollPane = new JScrollPane(tabla);
+            scrollPane.setBounds(50, 50, 400, 200);
+            add(scrollPane);  // Mostrar solo la tabla
+            revalidate();
+            repaint();
+            titulo1 = new JLabel("DATOS DE LOS JUGADORES");
+            titulo1.setBounds(150, 10, 200, 40);
+            add(titulo1);
+        }
 
 
     }
-
-
 }
+
